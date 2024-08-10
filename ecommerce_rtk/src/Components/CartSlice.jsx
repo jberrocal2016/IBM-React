@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   cartItems: [],
+  disabledProducts: [], // Track disabled products here
 };
 
 const CartSlice = createSlice({
@@ -16,6 +17,7 @@ const CartSlice = createSlice({
         existingItem.quantity += 1;
       } else {
         state.cartItems.push({ ...action.payload, quantity: 1 });
+        state.disabledProducts.push(action.payload.id); // Disable the product after adding
       }
     },
 
@@ -23,10 +25,14 @@ const CartSlice = createSlice({
       state.cartItems = state.cartItems.filter(
         (item) => item.id !== action.payload
       );
+      state.disabledProducts = state.disabledProducts.filter(
+        (id) => id !== action.payload
+      ); // Enable the product after removing
     },
 
     clearCart(state) {
       state.cartItems = [];
+      state.disabledProducts = []; // Re-enable all products when clearing the cart
     },
 
     increaseItemQuantity(state, action) {

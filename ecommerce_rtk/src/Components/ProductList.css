@@ -27,3 +27,9 @@
     border-radius: 5px;
     cursor: pointer;
   }
+
+  .add-to-cart-btn.disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
